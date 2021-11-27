@@ -1,5 +1,6 @@
-use cosmwasm_std::Uint128;
 use crate::state::State;
+use cosmwasm_bignumber::Uint256;
+use cosmwasm_std::Uint128;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
@@ -16,6 +17,10 @@ pub struct InstantiateMsg {
 pub enum ExecuteMsg {
     // Called by buyer, to deposit some funds
     Deposit {},
+    // Called by arbiter to claim the deposits stored in anchor back to the smart contract
+    // We burn the aust we receive after a deposit. This has to be called inorder to successfully
+    // complete the payments
+    ClaimDeposits {},
     // Called by buyer after delivery has been done to transfer funds to seller
     ConfirmDelivery {},
 }
@@ -25,7 +30,7 @@ pub enum ExecuteMsg {
 pub enum QueryMsg {
     GetState {},
     // returns the value of the payment from anchor
-    GetPaymentValue {}
+    GetPaymentValue {},
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -33,7 +38,7 @@ pub struct PaymentValueQueryResponse {
     // amount of aust minted for the contract
     pub aust_amount: Uint128,
     // amount of ust based on the aust exchange rate
-    pub ust_amount: Uint128
+    pub ust_amount: Uint256,
 }
 
 // We define a custom struct for each query response
@@ -45,5 +50,5 @@ pub struct StateResponse {
 // We define a custom struct for each query response
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct PaymentValueResponse {
-    pub payment_value_res: Option<PaymentValueQueryResponse>
+    pub payment_value_res: Option<PaymentValueQueryResponse>,
 }

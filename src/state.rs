@@ -18,14 +18,14 @@ pub struct State {
     pub buyer_payment: Coin,
 
     pub anchor_market_contract: Addr,
-    pub anchor_aust_contract: Addr
+    pub anchor_aust_contract: Addr,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub enum EscrowStatus {
     AwaitingPayment,
     AwaitingDelivery,
-    Delivered
+    Delivered,
 }
 
 pub const STATE: Item<State> = Item::new("state");

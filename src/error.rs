@@ -16,5 +16,11 @@ pub enum ContractError {
     MultipleCoinsSent {},
 
     #[error("Wrong denom sent")]
-    WrongDenomSent {}
+    WrongDenomSent {},
+
+    #[error("Escrow has been delivered")]
+    AlreadyDelivered {},
+
+    #[error("Funds have not been fetched from anchor")]
+    FundsNotReceivedFromAnchor {},
 }
